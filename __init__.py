@@ -39,7 +39,7 @@ def login():
         additional_claims={"role": role}
     )
    
-    access_token = create_access_token(identity=username)
+  
   
     return jsonify(access_token=access_token)
 @app.route("/admin", methods=["GET"])
