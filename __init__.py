@@ -34,7 +34,7 @@ def login():
      
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
   # Exemple : l'utilisateur "test" est un admin
-    role = "admin" if username == "admin"
+    role = "admin" if username == "test" else "user"
 
     # On ajoute le rôle dans le token via "additional_claims"
     access_token = create_access_token(
