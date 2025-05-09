@@ -20,7 +20,10 @@ jwt = JWTManager(app)
 @app.route('/')
 def hello_world():
     return render_template('accueil.html')
-
+  
+@app.route("/formulaire", methods=["GET"])
+def formulaire():
+    return render_template("formulaire.html")
 # Création d'une route qui vérifie l'utilisateur et retour un Jeton JWT si ok.
 # La fonction create_access_token() est utilisée pour générer un jeton JWT.
 @app.route("/login", methods=["POST"])
@@ -40,8 +43,8 @@ def login():
     )
    
   
-  
     return jsonify(access_token=access_token)
+  
 @app.route("/admin", methods=["GET"])
 @jwt_required()
 def admin():
