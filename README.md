@@ -77,6 +77,11 @@ Pour ce projet Métriques, **vous avez 4 secrets à créer** dans votre Reposito
   
 Voici une vidéo pour vous expliquer le processus de création de vos secrets dans GitHUB : [Création des secrets](https://youtu.be/pi80zRdrJyQ)  
 Vous pouvez à présent **lancer une action pour mettre en ligne votre solution**.  
+
+**Dernière étape :** Pour engager l'automatisation de votre première Action, vous devez cliquer sur le gros boutton vert dans l'onglet supérieur Actions. Le boutton s'intitule "I understand my workflows, go ahead and enable them"  
+  
+![Screenshot Actions](Actions_Button.jpg)
+
   
 Notions acquises de cette séquence :  
 Vous avez vu dans cette séquence comment créer des secrets GiHUB afin de mettre en place de l'industrialisation continue.  
