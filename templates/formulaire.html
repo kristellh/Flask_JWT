@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+</head>
+<body>
+    <h1>Connexion</h1>
+    <form id="login-form">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <button onclick="accessProtected()">Accéder à /protected</button>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                document.cookie = `access_token=${data.access_token}; path=/; max-age=3600`;
+                alert("Connexion réussie !");
+            } else {
+                alert(data.msg || "Erreur de connexion");
+            }
+        });
+
+        async function accessProtected() {
+            const token = getCookie('access_token');
+
+            const response = await fetch('/protected', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            const data = await response.json();
+            alert(JSON.stringify(data));
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+</body>
+</html>
