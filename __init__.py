@@ -28,7 +28,7 @@ def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
     if username != "test" or password != "test":
-      role="admin"
+     
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
   # Exemple : l'utilisateur "test" est un admin
     role = "admin" if username == "test" else "user"
