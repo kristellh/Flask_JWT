@@ -8,6 +8,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_jwt_extended import get_jwt
 from datetime import timedelta                                                                                                                                  
 app = Flask(__name__)                                                                                                                  
                                                                                                                                        
@@ -28,10 +29,26 @@ def login():
     password = request.json.get("password", None)
     if username != "test" or password != "test":
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
+  # Exemple : l'utilisateur "test" est un admin
+    role = "admin" if username == "test" else "user"
 
+    # On ajoute le rôle dans le token via "additional_claims"
+    access_token = create_access_token(
+        identity=username,
+        additional_claims={"role": role}
+    )
+   
     access_token = create_access_token(identity=username)
+  
     return jsonify(access_token=access_token)
+@app.route("/admin", methods=["GET"])
+@jwt_required()
+def admin():
+    claims = get_jwt()
+    if claims.get("role") != "admin":
+        return jsonify({"msg": "Accès interdit : vous n'êtes pas administrateur"}), 403
 
+    return jsonify(msg="Bienvenue dans l'espace admin"), 200
 
 # Route protégée par un jeton valide
 @app.route("/protected", methods=["GET"])
